@@ -14,10 +14,10 @@ module SnakeGame
       @body = body.empty? ? [[10, 10], [10, 11], [10, 12]] : body
       raise SnakeBodyError unless correct_body?
 
-      @direction  = kwargs['direction']  || 'up'
-      @head_color = kwargs['head_color'] || 'red'
-      @body_color = kwargs['body_color'] || 'white'
-      @grid_width = kwargs['grid_width'] || 20
+      @direction  = kwargs[:direction]  || 'up'
+      @head_color = kwargs[:head_color] || 'red'
+      @body_color = kwargs[:body_color] || 'white'
+      @grid_width = kwargs[:grid_width] || 20
     end
 
     def draw
