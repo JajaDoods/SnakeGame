@@ -5,20 +5,26 @@ module SnakeGame
   # directions basic info
   DIRECTIONS = %w[up down left right].freeze
   OPPOSITE_DIRECTIONS = [%w[up down], %w[left right]].freeze
-  DEFAULT_BODY = [[10, 10], [10, 11], [10, 12]].freeze
 
   SnakeBodyError = Error.new 'Invalid snake body points.'
 
   # Snake - methods for controlling the snake
   class Snake
     def initialize(*body, **kwargs)
-      @body = body || DEFAULT_BODY
+      @body = body.empty? ? [[10, 10], [10, 11], [10, 12]] : body
       raise SnakeBodyError unless correct_body?
 
       @direction  = kwargs['direction']  || 'up'
       @head_color = kwargs['head_color'] || 'red'
       @body_color = kwargs['body_color'] || 'white'
       @grid_width = kwargs['grid_width'] || 20
+    end
+
+    def draw
+      @body.each_with_index do |p, i|
+        color = i.zero? ? @head_color : @body_color
+        Square.new(x: p[0] * @grid_width, y: p[1] * @grid_width, size: @grid_width, color: color)
+      end
     end
 
     private
