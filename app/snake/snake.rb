@@ -63,7 +63,7 @@ module SnakeGame
                             [*p1, *p2].all?(Integer) &&
                             [p1.size, p2.size].all?(2)
 
-        return false if Math.sqrt(((p2[0] - p1[0])**2) + ((p2[1] - p1[1])**2)) != 1
+        return false if cell_distance(p1, p2) != 1
       end
       true
     end
@@ -106,6 +106,12 @@ module SnakeGame
 
     def snake_right?
       @body[0][1] == @body[1][1] && @body[0][0] > @body[1][0]
+    end
+
+    def cell_distance(cell1, cell2)
+      x1, y1 = cell1
+      x2, y2 = cell2
+      Math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
     end
   end
 end
