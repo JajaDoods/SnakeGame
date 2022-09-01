@@ -40,4 +40,25 @@ RSpec.describe SnakeGame::Snake do
     expect{ snake_right.direction = 'left' }.to raise_error(SnakeGame::ForbiddenDirectionError)
   end
 
+  it 'Checking snake "move" method' do
+    # direction = 'up'; body = [10, 10], [10, 11], [10, 12]
+    snake = SnakeGame::Snake.new
+    expect(snake.body).to eq([[10, 10], [10, 11], [10, 12]])
+
+    snake.direction = 'left'
+    snake.move
+    expect(snake.body).to eq([[9, 10], [10, 10], [10, 11]])
+
+    snake.direction = 'down'
+    snake.move
+    expect(snake.body).to eq([[9, 11], [9, 10], [10, 10]])
+
+    snake.direction = 'right'
+    snake.move
+    expect(snake.body).to eq([[10, 11], [9, 11], [9, 10]])
+
+    snake.direction = 'up'
+    snake.move
+    expect(snake.body).to eq([[10, 10], [10, 11], [9, 11]])
+  end
 end
