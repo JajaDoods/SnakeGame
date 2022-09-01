@@ -228,7 +228,7 @@ module SnakeGame
     end
 
     def color=(color)
-      new_color(color: color)
+      new_color(color)
     end
 
     def cost
