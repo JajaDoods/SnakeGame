@@ -28,6 +28,20 @@ module SnakeGame
     end
   end
 
+  # This error occurs if food color not found in
+  # Food.food_scores
+  class UnkownFoodError < StandardError
+    def initialize(msg = 'Unkown food color')
+      super msg
+    end
+  end
+
+  class InvalidFoodCostError < StandardError
+    def initialize(msg = 'Invalid food cost')
+      super msg
+    end
+  end
+
   # Snake - methods for controlling the snake
   class Snake
     attr_reader :direction, :body
@@ -151,6 +165,78 @@ module SnakeGame
       x1, y1 = cell1
       x2, y2 = cell2
       Math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
+    end
+  end
+
+  # Food constains info about food and method for controlling
+  class Food
+    attr_reader :x, :y, :color
+
+    class << self
+      @@food_cost = {
+        white: 1,
+        blue: 5,
+        red: 10,
+        yellow: 15
+      }
+
+      def food
+        @@food_cost
+      end
+
+      def [](color)
+        color = color.to_sym unless color.is_a? Symbol
+        raise UnkownFoodError unless Food.food.key? color
+
+        @@food_cost[color]
+      end
+
+      def []=(color, cost)
+        color = color.to_sym unless color.is_a? Symbol
+        raise InvalidFoodCostError unless cost.is_a?(Integer) && cost.positive?
+
+        @@food_cost[color] = cost
+      end
+
+      def delete(color)
+        color = color.to_sym unless color.is_a? Symbol
+        @@food_cost.delete color
+      end
+    end
+
+    def initialize(screen_width: 620, screen_height: 620, grid_size: 20, **kwargs)
+      @screen_width = screen_width
+      @screen_height = screen_height
+      @grid_size = grid_size
+
+      new_food(kwargs[:color] || Food.food.keys.sample)
+    end
+
+    def draw
+      Square.new(x: @x * @grid_size, y: @y * @grid_size, size: @grid_size, color: @color.to_s)
+    end
+
+    def new_food(color)
+      new_color(color)
+      @x = rand(@screen_width / @grid_size)
+      @y = rand(@screen_height / @grid_size)
+    end
+
+    def color=(color)
+      new_color(color)
+    end
+
+    def cost
+      Food[@color]
+    end
+
+    protected
+
+    def new_color(color)
+      color = color.to_sym unless color.is_a? Symbol
+      raise UnkownFoodError unless Food.food.key? color
+
+      @color = color
     end
   end
 end
