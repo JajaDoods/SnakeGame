@@ -214,21 +214,21 @@ module SnakeGame
       @screen_height = screen_height
       @grid_size = grid_size
 
-      new_food(kwargs[:color] || Food.food.keys.sample)
+      new_food(color: kwargs[:color] || Food.food.keys.sample)
     end
 
     def draw
       Square.new(x: @x * @grid_size, y: @y * @grid_size, size: @grid_size, color: @color.to_s)
     end
 
-    def new_food(color)
-      new_color(color)
+    def new_food(color: nil)
+      new_color(color || Food.food.keys.sample)
       @x = rand(@screen_width / @grid_size)
       @y = rand(@screen_height / @grid_size)
     end
 
     def color=(color)
-      new_color(color)
+      new_color(color: color)
     end
 
     def cost
