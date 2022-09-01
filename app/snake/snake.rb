@@ -73,14 +73,7 @@ module SnakeGame
 
     def move
       @body.pop # remove snake tail
-      case @direction
-      when 'up'    then move_up
-      when 'down'  then move_down
-      when 'left'  then move_left
-      when 'right' then move_right
-      else
-        raise UnkownDirectionError
-      end
+      grow
     end
 
     def eat_food?(food)
