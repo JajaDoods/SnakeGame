@@ -81,6 +81,10 @@ module SnakeGame
       body.include? [food.x, food.y]
     end
 
+    def eat_self?
+      @body.count(@body[0]) > 1
+    end
+
     def grow
       case @direction
       when 'up'    then move_up
