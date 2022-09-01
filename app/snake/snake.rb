@@ -88,6 +88,17 @@ module SnakeGame
       body.include? [food.x, food.y]
     end
 
+    def grow
+      case @direction
+      when 'up'    then move_up
+      when 'down'  then move_down
+      when 'left'  then move_left
+      when 'right' then move_right
+      else
+        raise UnkownDirectionError
+      end
+    end
+
     protected
 
     def correct_body?
