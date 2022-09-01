@@ -83,6 +83,11 @@ module SnakeGame
       end
     end
 
+    def eat_food?(food)
+      body = @body.map { |c| crop_coords(c) }
+      body.include? [food.x, food.y]
+    end
+
     protected
 
     def correct_body?
