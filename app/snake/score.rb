@@ -11,10 +11,12 @@ module SnakeUI
 
       @score = kwargs[:score] || 0
       @color = kwargs[:color] || 'white'
+
+      @hide = false
     end
 
     def draw
-      Text.new("Score #{@score}", x: @x, y: @y, size: @grid_size, color: @color)
+      Text.new("Score #{@score}", x: @x, y: @y, size: @grid_size, color: @color) unless @hide
     end
 
     def increase(score)
@@ -22,11 +24,15 @@ module SnakeUI
     end
 
     def decrease(score)
-      @score -= score
+      @score.minu score
     end
 
     def reset
       @score = 0
+    end
+
+    def hide
+      @hide = true
     end
   end
 end
