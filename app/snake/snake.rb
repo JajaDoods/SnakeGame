@@ -39,7 +39,7 @@ module SnakeGame
       new_direction(kwargs[:direction] || 'up')
       @head_color = kwargs[:head_color] || 'red'
       @body_color = kwargs[:body_color] || 'white'
-      @grid_width = kwargs[:grid_width] || 20
+      @grid_size = kwargs[:grid_width] || 20
 
       @screen_width = kwargs[:screen_width] || 620
       @screen_height = kwargs[:screen_height] || 620
@@ -49,7 +49,7 @@ module SnakeGame
       body = @body.map { |c| crop_coords(c) }
       body.each_with_index do |p, i|
         color = i.zero? ? @head_color : @body_color
-        Square.new(x: p[0] * @grid_width, y: p[1] * @grid_width, size: @grid_width, color: color)
+        Square.new(x: p[0] * @grid_size, y: p[1] * @grid_size, size: @grid_size, color: color)
       end
     end
 
@@ -94,8 +94,8 @@ module SnakeGame
     end
 
     def crop_coords(cell)
-      grid_width = @screen_width / @grid_width
-      grid_height = @screen_height / @grid_width
+      grid_width = @screen_width / @grid_size
+      grid_height = @screen_height / @grid_size
 
       [cell[0] % grid_width, cell[1] % grid_height]
     end
