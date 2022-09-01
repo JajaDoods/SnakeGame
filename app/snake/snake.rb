@@ -53,6 +53,18 @@ module SnakeGame
       new_direction dir
     end
 
+    def move
+      @body.pop # remove snake tail
+      case @direction
+      when 'up'    then move_up
+      when 'down'  then move_down
+      when 'left'  then move_left
+      when 'right' then move_right
+      else
+        raise UnkownDirectionError
+      end
+    end
+
     protected
 
     def correct_body?
@@ -106,6 +118,22 @@ module SnakeGame
 
     def snake_right?
       @body[0][1] == @body[1][1] && @body[0][0] > @body[1][0]
+    end
+
+    def move_up
+      @body.unshift [@body[0][0], @body[0][1] - 1]
+    end
+
+    def move_down
+      @body.unshift [@body[0][0], @body[0][1] + 1]
+    end
+
+    def move_left
+      @body.unshift [@body[0][0] - 1, @body[0][1]]
+    end
+
+    def move_right
+      @body.unshift [@body[0][0] + 1, @body[0][1]]
     end
 
     def cell_distance(cell1, cell2)
